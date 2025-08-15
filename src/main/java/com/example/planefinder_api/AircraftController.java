@@ -31,9 +31,9 @@ public class AircraftController {
         ac.setSpeed(random.nextInt(600));
         ac.setLat(random.nextDouble() * 180 - 90);  // Широта (-90..90)
         ac.setLon(random.nextDouble() * 360 - 180); // Долгота (-180..180)
-        ac.setLastSeenTime(String.valueOf(Instant.now()));
-        ac.setPosUpdateTime(String.valueOf(Instant.now()));
-        ac.setBds40SeenTime(String.valueOf(Instant.now()));
+        ac.setLastSeenTime(Instant.now());
+        ac.setPosUpdateTime(Instant.now());
+        ac.setBds40SeenTime(Instant.now());
 
         return ac;
     }

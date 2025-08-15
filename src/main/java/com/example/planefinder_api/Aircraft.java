@@ -33,7 +33,7 @@ public class Aircraft {
     private Instant posUpdateTime;
     @JsonProperty("bds40_seen_time")
     private Instant bds40SeenTime;
-    public String getLastSeenTime() {
+    /*public String getLastSeenTime() {
         return lastSeenTime.toString();
     }
     public void setLastSeenTime(String lastSeenTime) {
@@ -63,5 +63,6 @@ public class Aircraft {
             this.bds40SeenTime = Instant.ofEpochSecond(0);
         }
     }
+     */
 }
 
