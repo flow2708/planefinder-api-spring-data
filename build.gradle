@@ -25,7 +25,7 @@ repositories {
 }
 
 ext {
-	set('springCloudVersion', "2023.0.0") // Используйте актуальную версию для Spring Boot 3.5.4
+	set('springCloudVersion', "2025.0.0")
 }
 
 dependencies {
