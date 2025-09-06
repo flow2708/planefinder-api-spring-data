@@ -3,6 +3,7 @@ package com.example.planefinder_api;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 
 import java.time.Instant;
 import java.util.Arrays;
@@ -15,11 +16,11 @@ public class AircraftController {
     private final Random random = new Random();
     private final List<String> callsigns = Arrays.asList("DAL123", "UAL456", "AAL789", "RYR555");
     @GetMapping
-    public List<Aircraft> getAircraft() {
+    public Flux<Aircraft> getAircraft() {
         Aircraft ar1 = generateRandomAircraft();
         Aircraft ar2 = generateRandomAircraft();
 
-        return List.of(ar1, ar2);
+        return Flux.fromIterable(List.of(ar1, ar2));
     }
     private Aircraft generateRandomAircraft() {
         Aircraft ac = new Aircraft();
