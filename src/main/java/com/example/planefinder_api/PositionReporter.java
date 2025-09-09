@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import reactor.core.publisher.Flux;
 
+import java.time.Duration;
 import java.util.function.Supplier;
 
 @AllArgsConstructor
@@ -14,9 +15,24 @@ public class PositionReporter {
 
     @Bean
     Supplier<Flux<Aircraft>> reportPositions() {
-        return () -> aircraftController.getAircraft()
+        return () -> Flux.interval(Duration.ofSeconds(5)) // Отчет каждые 5 секунд
+                .flatMap(i -> aircraftController.getAircraft()
+                        .onErrorResume(e -> {
+                            System.err.println("Error retrieving aircraft: " + e.getMessage());
+                            return Flux.empty();
+                        }))
+                .doOnNext(aircraft ->
+                        System.out.println("Reporting aircraft: " + aircraft.getCallsign()))
+                .doOnError(e ->
+                        System.err.println("Critical error in position reporter: " + e.getMessage()));
+    }
+
+    // Дополнительный бин для непрерывного потока данных
+    @Bean
+    Supplier<Flux<Aircraft>> continuousPositionStream() {
+        return () -> aircraftController.getAircraftStream()
                 .onErrorResume(e -> {
-                    System.err.println("Error retrieving aircraft: " + e.getMessage());
+                    System.err.println("Error in continuous stream: " + e.getMessage());
                     return Flux.empty();
                 });
     }
