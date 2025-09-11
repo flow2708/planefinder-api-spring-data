@@ -16,7 +16,7 @@ public class PositionReporter {
     @Bean
     Supplier<Flux<Aircraft>> reportPositions() {
         return () -> Flux.interval(Duration.ofSeconds(5)) // Отчет каждые 5 секунд
-                .flatMap(i -> aircraftController.getAircraft()
+                .Map(i -> aircraftController.getAircraft()
                         .onErrorResume(e -> {
                             System.err.println("Error retrieving aircraft: " + e.getMessage());
                             return Flux.empty();
